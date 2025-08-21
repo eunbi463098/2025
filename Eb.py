@@ -1,55 +1,73 @@
 import streamlit as st
-import pandas as pd
 
 # -------------------- 페이지 설정 --------------------
-st.set_page_config(page_title="SNS 콘텐츠 추천기", page_icon="📱", layout="wide")
+st.set_page_config(page_title="기분 음악 추천기", page_icon="🎵", layout="centered")
+
+# -------------------- CSS 스타일 --------------------
+st.markdown("""
+    <style>
+    .title {
+        font-size:32px;
+        font-weight:bold;
+        color:#4B9CD3;
+        text-align:center;
+        margin-bottom:20px;
+    }
+    .card {
+        background-color:#f0f8ff;
+        padding:15px;
+        border-radius:12px;
+        margin:10px 0;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        font-size:18px;
+    }
+    .mood-happy {background-color:#FFFACD;}
+    .mood-sad {background-color:#ADD8E6;}
+    .mood-angry {background-color:#F08080;}
+    .mood-calm {background-color:#E0FFFF;}
+    </style>
+""", unsafe_allow_html=True)
 
 # -------------------- 제목 --------------------
-st.markdown("<h1 style='text-align: center; color: #4B9CD3;'>📱 SNS 콘텐츠 아이디어 추천기</h1>", unsafe_allow_html=True)
-st.write("키워드를 입력하면, 플랫폼에 맞는 **콘텐츠 아이디어·해시태그·콘텐츠 캘린더**를 추천합니다.")
+st.markdown("<div class='title'>🎵 오늘의 기분에 맞는 음악 추천기 🎵</div>", unsafe_allow_html=True)
+st.write("현재 기분을 선택하면, 당신에게 딱 맞는 음악을 추천해드려요!")
 
-# -------------------- 입력 --------------------
-keyword = st.text_input("👉 키워드를 입력하세요 (예: 헬스, 카페) ")
-platform = st.selectbox("📌 플랫폼을 선택하세요", ["인스타그램", "틱톡", "유튜브"])
+# -------------------- 기분 선택 --------------------
+mood = st.radio(
+    "오늘 기분은 어떤가요?",
+    ["😊 즐거움", "😢 슬픔", "😡 스트레스", "😴 편안함"]
+)
 
-# -------------------- 데이터 --------------------
-ideas = {
-    "헬스": {
-        "인스타그램": ["Before & After 사진", "운동 꿀팁 카드뉴스", "헬스 밈 콘텐츠"],
-        "틱톡": ["1분 홈트 챌린지", "헬린이 vs 헬창 영상", "헬스 변신 챌린지"],
-        "유튜브": ["하루 루틴 브이로그", "헬스장 리뷰", "운동 식단 레시피"]
-    },
-    "카페": {
-        "인스타그램": ["감성 카페 사진", "오늘의 메뉴 소개", "디저트 추천 카드뉴스"],
-        "틱톡": ["카페 브이로그", "음료 제조 영상", "카페 직원 일상"],
-        "유튜브": ["카페 투어", "숨겨진 맛집 소개", "브랜드 카페 리뷰"]
-    }
+# -------------------- 기분별 추천곡 데이터 --------------------
+music = {
+    "😊 즐거움": [
+        {"title": "Happy - Pharrell Williams", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+        {"title": "Can't Stop The Feeling - Justin Timberlake", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"}
+    ],
+    "😢 슬픔": [
+        {"title": "Someone Like You - Adele", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"},
+        {"title": "All of Me - John Legend", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"}
+    ],
+    "😡 스트레스": [
+        {"title": "Eye of the Tiger - Survivor", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"},
+        {"title": "Stronger - Kanye West", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"}
+    ],
+    "😴 편안함": [
+        {"title": "Clair de Lune - Debussy", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3"},
+        {"title": "Weightless - Marconi Union", "url": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"}
+    ]
 }
 
-hashtags = {
-    "헬스": ["#운동기록", "#홈트", "#다이어트그램", "#헬스타그램"],
-    "카페": ["#카페스타그램", "#오늘의커피", "#감성카페", "#디저트맛집"]
-}
+# -------------------- 배경색 매칭 --------------------
+mood_class = {
+    "😊 즐거움": "mood-happy",
+    "😢 슬픔": "mood-sad",
+    "😡 스트레스": "mood-angry",
+    "😴 편안함": "mood-calm"
+}[mood]
 
-calendar = {
-    "월요일": "밈 콘텐츠",
-    "수요일": "정보 카드뉴스",
-    "금요일": "짧은 영상 (릴스/쇼츠)",
-    "일요일": "브랜드 스토리 포스팅"
-}
-
-# -------------------- 결과 출력 --------------------
-if keyword:
-    if keyword in ideas:
-        st.subheader("✨ 추천 콘텐츠 아이디어")
-        for i in ideas[keyword][platform]:
-            st.success(i)   # 카드 대신 심플한 강조 박스
-
-        st.subheader("🔥 추천 해시태그")
-        st.write(" ".join(hashtags[keyword]))
-
-        st.subheader("📅 콘텐츠 캘린더 예시")
-        df = pd.DataFrame(calendar.items(), columns=["요일", "추천 콘텐츠"])
-        st.table(df)
-    else:
-        st.warning("😅 아직 해당 키워드에 대한 아이디어 데이터가 준비되지 않았습니다.")
+# -------------------- 추천곡 출력 --------------------
+st.subheader(f"🎧 추천 음악 ({mood})")
+for song in music[mood]:
+    st.markdown(f"<div class='card {mood_class}'>{song['title']}</div>", unsafe_allow_html=True)
+    st.audio(song['url'], format="audio/mp3")
