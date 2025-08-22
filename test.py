@@ -1,10 +1,9 @@
 """
-Streamlit Mood-based Music Recommender - 한국 노래 제목 표시 버전 (플레이리스트 확장)
+Streamlit Mood-based Music Recommender - 한국 노래 제목 표시 버전 (한 곡 추천)
 
 ▶ 기능
-- 사용자가 기분을 선택하면 그에 맞는 한국 노래 제목과 가수 리스트를 보여줍니다.
+- 사용자가 기분을 선택하면 그에 맞는 한국 노래 중 한 곡만 추천합니다.
 - 유튜브 임베드 없이 제목과 가수 정보만 제공
-- 각 기분별로 3~5곡씩 추천
 """
 
 import random
@@ -68,18 +67,15 @@ MOOD_MUSIC = {
 # -------------------------------
 
 st.title("🎵 기분별 한국 노래 추천기")
-st.caption("당신의 기분에 맞는 한국 노래 제목과 가수 리스트를 보여줍니다.")
+st.caption("당신의 기분에 맞는 한국 노래 한 곡만 추천합니다.")
 
 mood = st.selectbox("지금 기분을 선택하세요", list(MOOD_MUSIC.keys()))
 
 if mood:
     st.subheader(f"당신의 기분: {mood}")
-    songs = MOOD_MUSIC[mood].copy()
-    random.shuffle(songs)
-
-    st.markdown("**추천 플레이리스트:**")
-    for i, (artist, title) in enumerate(songs[:5], start=1):
-        st.write(f"{i}. {title} — {artist}")
+    songs = MOOD_MUSIC[mood]
+    choice = random.choice(songs)
+    st.markdown(f"**추천 곡:** {choice[1]} — {choice[0]}")
 
 # -------------------------------
 # 팁
@@ -89,6 +85,6 @@ st.markdown(
     """
 **Tips**
 - 🎶 `MOOD_MUSIC` 딕셔너리에 원하는 노래와 가수를 더 추가할 수 있어요.
-- 🔀 매번 다른 플레이리스트를 보고 싶으면 `random.shuffle`을 이용해 곡 순서를 섞을 수 있어요.
+- 🔀 매번 다른 곡을 추천받고 싶으면 `random.choice`를 이용해 곡을 무작위로 선택합니다.
 """
 )
