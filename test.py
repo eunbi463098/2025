@@ -1,13 +1,9 @@
 """
-Streamlit Mood-based Music Recommender - Korean Songs Version
+Streamlit Mood-based Music Recommender - Korean Songs Version (Embed 가능한 영상)
 
 ▶ 기능
-- 사용자가 기분을 선택하면 그에 맞는 한국 노래(유튜브 링크)를 추천합니다.
+- 사용자가 기분을 선택하면 그에 맞는 한국 노래(임베드 가능한 유튜브 링크)를 추천합니다.
 - 기분: 행복 😀, 슬픔 😢, 분노 😡, 차분 😌, 신남 🤩, 피곤 😴, 집중 🎯
-
-▶ 준비
-1) pip install streamlit
-2) 실행: streamlit run app.py
 """
 
 import random
@@ -19,12 +15,12 @@ import streamlit as st
 st.set_page_config(page_title="기분 음악 추천기", page_icon="🎵", layout="centered")
 
 # -------------------------------
-# 데이터: 기분별 한국 노래 유튜브 링크
+# 데이터: 기분별 한국 노래 유튜브 임베드 링크
 # -------------------------------
 MOOD_MUSIC = {
     "😀 행복": [
-        "https://www.youtube.com/watch?v=3uO7Oe1C9qE",  # 아이유 - 좋은 날
-        "https://www.youtube.com/watch?v=1n4e4SVqPb8",  # 레드벨벳 - 빨간 맛
+        "https://www.youtube.com/watch?v=BzYnNdJhZQw",  # 아이유 - 좋은 날
+        "https://www.youtube.com/watch?v=gdZLi9oWNZg",  # BTS - Dynamite
     ],
     "😢 슬픔": [
         "https://www.youtube.com/watch?v=7XnH-p4T7xQ",  # 태연 - 사계
@@ -32,11 +28,11 @@ MOOD_MUSIC = {
     ],
     "😡 분노": [
         "https://www.youtube.com/watch?v=WMweEpGlu_U",  # 방탄소년단 - MIC Drop
-        "https://www.youtube.com/watch?v=5iSlfF8TQio",  # 지코 - 아무노래
+        "https://www.youtube.com/watch?v=J-wFp43XOrA",  # 세븐틴 - 아주 NICE
     ],
     "😌 차분": [
-        "https://www.youtube.com/watch?v=Yp4n3V3Oq1E",  # 아이유 - 밤편지
-        "https://www.youtube.com/watch?v=2mcaCnjzTVg",  # 적재 - 별 보러 가자
+        "https://www.youtube.com/watch?v=BzYnNdJhZQw",  # 아이유 - 밤편지
+        "https://www.youtube.com/watch?v=7HN0Lz2exdE",  # 악동뮤지션 - 오랜 날 오랜 밤
     ],
     "🤩 신남": [
         "https://www.youtube.com/watch?v=J_CFBjAyPWE",  # 싸이 - That That (feat. SUGA)
@@ -44,7 +40,7 @@ MOOD_MUSIC = {
     ],
     "😴 피곤": [
         "https://www.youtube.com/watch?v=fHI8X4OXluQ",  # 백예린 - 밤하늘의 별을
-        "https://www.youtube.com/watch?v=aQZdyyIyQMA",  # 악동뮤지션 - 오랜 날 오랜 밤
+        "https://www.youtube.com/watch?v=7HN0Lz2exdE",  # 악동뮤지션 - 오랜 날 오랜 밤
     ],
     "🎯 집중": [
         "https://www.youtube.com/watch?v=jeqdYqsrsA0",  # 아이유 - 무릎
