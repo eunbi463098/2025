@@ -94,7 +94,7 @@ MOOD_MUSIC = {
 # UI
 # -------------------------------
 st.title("🎵 기분별 노래 추천")
-st.caption("기분에 맞는 한국 노래 한 곡을 카드 스타일로 추천합니다.")
+st.caption("기분에 맞는 노래 한 곡을 추천해드립니다.")
 
 mood = st.selectbox("지금 기분을 선택하세요", list(MOOD_MUSIC.keys()))
 
