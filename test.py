@@ -2,7 +2,9 @@
 Streamlit Mood-based Music Recommender - 심플 한국 노래 추천기
 
 ▶ 기능
-- 사용자가 기분을 선택하면 그에 맞는 한국 노래 한 곡만 바로 추천
+- 사용자가 기분을 선택하면 그에 맞는 한국 노래 한 곡만 추천
+- 첫 선택 시 바로 추천
+- 같은 기분을 재선택하면 "다른 노래 추천받기" 버튼
 - 심플하고 깔끔한 UI
 """
 
@@ -73,16 +75,18 @@ MOOD_MUSIC = {
 st.title("🎵 기분별 노래 추천")
 st.caption("기분에 맞는 노래 한 곡을 바로 추천해드립니다.")
 
+# -------------------------------
+# 세션 상태 초기화
+# -------------------------------
+if "last_mood" not in st.session_state:
+    st.session_state.last_mood = None
+
 # 기분 선택
 mood = st.selectbox("지금 기분을 선택하세요", list(MOOD_MUSIC.keys()))
 
-if mood:
-    songs = MOOD_MUSIC[mood]
-
-    # 선택 즉시 추천
-    artist, title = random.choice(songs)
-
-    # 심플 카드 스타일
+# 추천 함수
+def recommend_song():
+    artist, title = random.choice(MOOD_MUSIC[mood])
     st.markdown(
         f"""
         <div style="
@@ -101,13 +105,24 @@ if mood:
     )
 
 # -------------------------------
+# 추천 로직
+# -------------------------------
+if st.session_state.last_mood != mood:
+    recommend_song()
+    st.session_state.last_mood = mood
+else:
+    if st.button("다른 노래 추천받기"):
+        recommend_song()
+
+# -------------------------------
 # 팁
 # -------------------------------
 st.divider()
 st.markdown(
     """
 **Tips**
-- 🎶 원하는 노래와 가수를 `MOOD_MUSIC` 딕셔너리에 더 추가할 수 있어요.
-- 🎯 기분 선택만으로 바로 한 곡을 랜덤 추천받을 수 있습니다.
+- 🎶 원하는 노래와 가수를 `MOOD_MUSIC` 딕셔너리에 더 추가할 수 있습니다.
+- 🎯 같은 기분을 재선택하면 '다른 노래 추천받기' 버튼으로 다른 곡을 추천받을 수 있습니다.
 """
+)
 )
