@@ -2,8 +2,8 @@
 Streamlit Mood-based Music Recommender - 화려한 한국 노래 추천기
 
 ▶ 기능
-- 사용자가 기분을 선택하면 그에 맞는 한국 노래 한 곡만 추천
-- 화려한 UI: 카드 스타일, 색상, 버튼, 이모지 적용
+- 사용자가 기분을 선택하면 그에 맞는 한국 노래 한 곡만 바로 추천
+- 화려한 UI: 카드 스타일, 색상, 이모지 적용
 """
 
 import random
@@ -25,6 +25,7 @@ MOOD_MUSIC = {
             ("레드벨벳", "빨간 맛"),
             ("트와이스", "Cheer Up"),
             ("방탄소년단", "Permission to Dance"),
+            ("RIIZE", "Fly Up"),
         ],
         "color": "#FFF176",
         "emoji": "😀"
@@ -45,7 +46,7 @@ MOOD_MUSIC = {
             ("방탄소년단", "MIC Drop"),
             ("지코", "Any Song"),
             ("다이나믹 듀오", "BAAAM"),
-            ("DAY6", "Soot Me"),
+            ("DAY6", "Shoot Me"),
         ],
         "color": "#E57373",
         "emoji": "😡"
@@ -57,6 +58,7 @@ MOOD_MUSIC = {
             ("헤이즈", "비도 오고 그래서"),
             ("적재", "별 보러 가자"),
             ("폴킴", "모든 날 모든 순간"),
+            ("이하이", "한숨"),
         ],
         "color": "#81C784",
         "emoji": "😌"
@@ -97,8 +99,9 @@ MOOD_MUSIC = {
 # UI
 # -------------------------------
 st.title("🎵 기분별 노래 추천")
-st.caption("기분에 맞는 노래 한 곡을 추천해드립니다.")
+st.caption("기분에 맞는 노래 한 곡을 바로 추천해드립니다.")
 
+# 기분 선택
 mood = st.selectbox("지금 기분을 선택하세요", list(MOOD_MUSIC.keys()))
 
 if mood:
@@ -107,10 +110,14 @@ if mood:
     color = mood_info["color"]
     emoji = mood_info["emoji"]
 
-    if st.button("🎶 노래 추천 받기"):
-        choice = random.choice(songs)
-        artist, title = choice
-        st.markdown(f"<div style='background-color:{color}; padding:20px; border-radius:15px; text-align:center'>\n<h2>{emoji} {title} — {artist} {emoji}</h2>\n</div>", unsafe_allow_html=True)
+    # 선택 즉시 추천
+    choice = random.choice(songs)
+    artist, title = choice
+    st.markdown(
+        f"<div style='background-color:{color}; padding:20px; border-radius:15px; text-align:center; color:black'>"
+        f"<h2>{emoji} {title} — {artist} {emoji}</h2>"
+        f"</div>", unsafe_allow_html=True
+    )
 
 # -------------------------------
 # 팁
@@ -120,6 +127,6 @@ st.markdown(
     """
 **Tips**
 - 🎶 `MOOD_MUSIC` 딕셔너리에 원하는 노래와 가수를 더 추가할 수 있어요.
-- 🔀 ‘노래 추천 받기’ 버튼을 눌러 매번 새로운 곡을 무작위로 추천받을 수 있습니다.
+- 🎯 기분 선택만으로 바로 한 곡을 랜덤 추천받을 수 있습니다.
 """
 )
