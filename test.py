@@ -45,6 +45,7 @@ MOOD_MUSIC = {
             ("방탄소년단", "MIC Drop"),
             ("지코", "Any Song"),
             ("다이나믹 듀오", "BAAAM"),
+            ("DAY6", "Soot Me"),
         ],
         "color": "#E57373",
         "emoji": "😡"
@@ -52,9 +53,10 @@ MOOD_MUSIC = {
     "😌 차분": {
         "songs": [
             ("아이유", "밤편지"),
-            ("악동뮤지션", "오랜 날 오랜 밤"),
+            ("아이유", "Love poem"),
             ("헤이즈", "비도 오고 그래서"),
             ("적재", "별 보러 가자"),
+            ("폴킴", "모든 날 모든 순간"),
         ],
         "color": "#81C784",
         "emoji": "😌"
@@ -63,7 +65,7 @@ MOOD_MUSIC = {
         "songs": [
             ("싸이", "That That (feat. SUGA)"),
             ("세븐틴", "아주 NICE"),
-            ("NCT 127", "Kick It"),
+            ("NCT 127", "영웅(Kick It)"),
             ("ITZY", "WANNABE"),
         ],
         "color": "#FFD54F",
@@ -84,6 +86,7 @@ MOOD_MUSIC = {
             ("아이유", "무릎"),
             ("검정치마", "EVERYTHING"),
             ("새소년", "단풍"),
+            ("DAY6", "그렇더라고요"),
         ],
         "color": "#4FC3F7",
         "emoji": "🎯"
