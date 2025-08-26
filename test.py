@@ -5,6 +5,7 @@ Streamlit Mood-based Music Recommender - 심플 한국 노래 추천기
 - 사용자가 기분을 선택하면 그에 맞는 한국 노래 한 곡만 추천
 - 첫 선택 시 바로 추천
 - '다른 노래 추천받기' 버튼으로 언제든 다른 곡 추천
+- 화면에는 항상 한 곡만 표시
 - 심플 텍스트 UI
 """
 
@@ -79,11 +80,16 @@ st.caption("기분에 맞는 노래 한 곡을 바로 추천해드립니다.")
 mood = st.selectbox("지금 기분을 선택하세요", list(MOOD_MUSIC.keys()))
 
 # -------------------------------
+# 추천 영역
+# -------------------------------
+song_placeholder = st.empty()  # 추천 곡을 표시할 영역
+
+# -------------------------------
 # 추천 함수
 # -------------------------------
 def recommend_song():
     artist, title = random.choice(MOOD_MUSIC[mood])
-    st.markdown(f"**{title}** — {artist}")
+    song_placeholder.markdown(f"**{title}** — {artist}")
 
 # -------------------------------
 # 추천 로직
