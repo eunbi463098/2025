@@ -81,8 +81,23 @@ if mood:
 
     # 선택 즉시 추천
     artist, title = random.choice(songs)
+
+    # 심플 카드 스타일
     st.markdown(
-        f"### 🎶 {title} — {artist}"
+        f"""
+        <div style="
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 1px 1px 8px rgba(0,0,0,0.08);
+        ">
+            <h2 style="margin:0; font-weight:600;">{title}</h2>
+            <p style="margin:5px 0 0; font-size:18px; color:#555;">{artist}</p>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 # -------------------------------
@@ -92,7 +107,7 @@ st.divider()
 st.markdown(
     """
 **Tips**
-- 🎶 `MOOD_MUSIC` 딕셔너리에 원하는 노래와 가수를 더 추가할 수 있어요.
+- 🎶 원하는 노래와 가수를 `MOOD_MUSIC` 딕셔너리에 더 추가할 수 있어요.
 - 🎯 기분 선택만으로 바로 한 곡을 랜덤 추천받을 수 있습니다.
 """
 )
