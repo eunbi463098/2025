@@ -1,9 +1,9 @@
 """
-Streamlit Mood-based Music Recommender - 화려한 한국 노래 추천기
+Streamlit Mood-based Music Recommender - 심플 한국 노래 추천기
 
 ▶ 기능
 - 사용자가 기분을 선택하면 그에 맞는 한국 노래 한 곡만 바로 추천
-- 화려한 UI: 카드 스타일, 색상, 이모지 적용
+- 심플하고 깔끔한 UI
 """
 
 import random
@@ -15,84 +15,56 @@ import streamlit as st
 st.set_page_config(page_title="기분 음악 추천기", page_icon="🎵", layout="centered")
 
 # -------------------------------
-# 데이터: 기분별 한국 노래 (가수 + 노래 제목 + 색상 + 이모지)
+# 데이터: 기분별 한국 노래 (가수 + 노래 제목)
 # -------------------------------
 MOOD_MUSIC = {
-    "😀 행복": {
-        "songs": [
-            ("아이유", "좋은 날"),
-            ("BTS", "Dynamite"),
-            ("레드벨벳", "빨간 맛"),
-            ("트와이스", "Cheer Up"),
-            ("방탄소년단", "Permission to Dance"),
-            ("RIIZE", "Fly Up"),
-        ],
-        "color": "#FFF176",
-        "emoji": "😀"
-    },
-    "😢 슬픔": {
-        "songs": [
-            ("태연", "사계"),
-            ("폴킴", "모든 날, 모든 순간"),
-            ("백예린", "그건 아마 우리의 잘못은 아닐 거야"),
-            ("아이유", "사랑이 잘"),
-            ("벤", "열애중"),
-        ],
-        "color": "#64B5F6",
-        "emoji": "😢"
-    },
-    "😡 분노": {
-        "songs": [
-            ("방탄소년단", "MIC Drop"),
-            ("지코", "Any Song"),
-            ("다이나믹 듀오", "BAAAM"),
-            ("DAY6", "Shoot Me"),
-        ],
-        "color": "#E57373",
-        "emoji": "😡"
-    },
-    "😌 차분": {
-        "songs": [
-            ("아이유", "밤편지"),
-            ("아이유", "Love poem"),
-            ("헤이즈", "비도 오고 그래서"),
-            ("적재", "별 보러 가자"),
-            ("폴킴", "모든 날 모든 순간"),
-            ("이하이", "한숨"),
-        ],
-        "color": "#81C784",
-        "emoji": "😌"
-    },
-    "🤩 신남": {
-        "songs": [
-            ("싸이", "That That (feat. SUGA)"),
-            ("세븐틴", "아주 NICE"),
-            ("NCT 127", "영웅(Kick It)"),
-            ("ITZY", "WANNABE"),
-        ],
-        "color": "#FFD54F",
-        "emoji": "🤩"
-    },
-    "😴 피곤": {
-        "songs": [
-            ("백예린", "밤하늘의 별을"),
-            ("악동뮤지션", "오랜 날 오랜 밤"),
-            ("아이유", "이 지금"),
-            ("케이시", "그때가 좋았어"),
-        ],
-        "color": "#B39DDB",
-        "emoji": "😴"
-    },
-    "🎯 집중": {
-        "songs": [
-            ("아이유", "무릎"),
-            ("검정치마", "EVERYTHING"),
-            ("새소년", "단풍"),
-            ("DAY6", "그렇더라고요"),
-        ],
-        "color": "#4FC3F7",
-        "emoji": "🎯"
-    },
+    "😀 행복": [
+        ("아이유", "좋은 날"),
+        ("BTS", "Dynamite"),
+        ("레드벨벳", "빨간 맛"),
+        ("트와이스", "Cheer Up"),
+        ("방탄소년단", "Permission to Dance"),
+        ("RIIZE", "Fly Up"),
+    ],
+    "😢 슬픔": [
+        ("태연", "사계"),
+        ("폴킴", "모든 날, 모든 순간"),
+        ("백예린", "그건 아마 우리의 잘못은 아닐 거야"),
+        ("아이유", "사랑이 잘"),
+        ("벤", "열애중"),
+    ],
+    "😡 분노": [
+        ("방탄소년단", "MIC Drop"),
+        ("지코", "Any Song"),
+        ("다이나믹 듀오", "BAAAM"),
+        ("DAY6", "Shoot Me"),
+    ],
+    "😌 차분": [
+        ("아이유", "밤편지"),
+        ("아이유", "Love poem"),
+        ("헤이즈", "비도 오고 그래서"),
+        ("적재", "별 보러 가자"),
+        ("폴킴", "모든 날 모든 순간"),
+        ("이하이", "한숨"),
+    ],
+    "🤩 신남": [
+        ("싸이", "That That (feat. SUGA)"),
+        ("세븐틴", "아주 NICE"),
+        ("NCT 127", "영웅(Kick It)"),
+        ("ITZY", "WANNABE"),
+    ],
+    "😴 피곤": [
+        ("백예린", "밤하늘의 별을"),
+        ("악동뮤지션", "오랜 날 오랜 밤"),
+        ("아이유", "이 지금"),
+        ("케이시", "그때가 좋았어"),
+    ],
+    "🎯 집중": [
+        ("아이유", "무릎"),
+        ("검정치마", "EVERYTHING"),
+        ("새소년", "단풍"),
+        ("DAY6", "그렇더라고요"),
+    ],
 }
 
 # -------------------------------
@@ -105,18 +77,12 @@ st.caption("기분에 맞는 노래 한 곡을 바로 추천해드립니다.")
 mood = st.selectbox("지금 기분을 선택하세요", list(MOOD_MUSIC.keys()))
 
 if mood:
-    mood_info = MOOD_MUSIC[mood]
-    songs = mood_info["songs"]
-    color = mood_info["color"]
-    emoji = mood_info["emoji"]
+    songs = MOOD_MUSIC[mood]
 
     # 선택 즉시 추천
-    choice = random.choice(songs)
-    artist, title = choice
+    artist, title = random.choice(songs)
     st.markdown(
-        f"<div style='background-color:{color}; padding:20px; border-radius:15px; text-align:center; color:black'>"
-        f"<h2>{emoji} {title} — {artist} {emoji}</h2>"
-        f"</div>", unsafe_allow_html=True
+        f"### 🎶 {title} — {artist}"
     )
 
 # -------------------------------
